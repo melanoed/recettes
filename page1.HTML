@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recettes de Cuisine</title>
+    <style>
+        /* Style global */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        header {
+            background-color: #4A148C;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a, #search-bar {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            background-color: #6A1B9A;
+            padding: 5px 10px;
+            border-radius: 30px;
+        }
+
+        #search-bar {
+            border: none;
+            padding: 10px;
+            width: 200px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6A1B9A;
+        }
+
+        .recipe {
+            background-color: #212121;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .recipe img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .recipe h3 {
+            color: #FFF;
+            margin-top: 10px;
+        }
+
+        .rating {
+            margin-top: 10px;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #B0B0B0;
+            cursor: pointer;
+        }
+
+        .star:hover {
+            color: #FFD700;
+        }
+
+        a {
+            color: #6A1B9A;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-btn {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #C2185B;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Recettes de Cuisine</h1>
+        <nav>
+            <ul>
+                <li><a href="#entrees">Entrées</a></li>
+                <li><a href="#plats">Plats principaux</a></li>
+                <li><a href="#desserts">Desserts</a></li>
+                <li><input type="text" id="search-bar" placeholder="Rechercher..."></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Section des Entrées -->
+    <section id="entrees">
+        <h2>Entrées</h2>
+        <div class="recipe" data-category="entrees">
+            <img src="saladecaesar.jpg" alt="Salade César">
+            <h3>Salade César</h3>
+            <p>Une salade classique avec du poulet grillé, de la laitue, des croûtons et une sauce crémeuse.</p>
+            <div class="rating">
+                <span class="star" onclick="rateRecipe(this, 1)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 2)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 3)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 4)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 5)">&#9733;</span>
+            </div>
+            <a href="recette-salade-cesar.html">Voir la recette</a>
+            <button class="delete-btn" onclick="deleteRecipe(this)">Supprimer</button>
+        </div>
+    </section>
+
+    <!-- Section des Plats principaux -->
+    <section id="plats">
+        <h2>Plats Principaux</h2>
+        <div class="recipe" data-category="plats">
+            <img src="poulet-roti.jpg" alt="Poulet rôti">
+            <h3>Poulet Rôti</h3>
+            <p>Un plat traditionnel de poulet rôti avec des légumes et des herbes fraîches.</p>
+            <div class="rating">
+                <span class="star" onclick="rateRecipe(this, 1)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 2)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 3)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 4)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 5)">&#9733;</span>
+            </div>
+            <a href="recette-poulet-roti.html">Voir la recette</a>
+            <button class="delete-btn" onclick="deleteRecipe(this)">Supprimer</button>
+        </div>
+    </section>
+
+    <!-- Section des Desserts -->
+    <section id="desserts">
+        <h2>Desserts</h2>
+        <div class="recipe" data-category="desserts">
+            <img src="tarte-au-chocolat.jpg" alt="Tarte au chocolat">
+            <h3>Tarte au chocolat</h3>
+            <p>Un dessert fondant au chocolat avec une croûte légère et une ganache onctueuse.</p>
+            <div class="rating">
+                <span class="star" onclick="rateRecipe(this, 1)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 2)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 3)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 4)">&#9733;</span>
+                <span class="star" onclick="rateRecipe(this, 5)">&#9733;</span>
+            </div>
+            <a href="recette-tarte-au-chocolat.html">Voir la recette</a>
+            <button class="delete-btn" onclick="deleteRecipe(this)">Supprimer</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Recettes de Cuisine</p>
+    </footer>
+
+    <script>
+        // Fonction de notation des recettes
+        function rateRecipe(starElement, rating) {
+            let stars = starElement.parentElement.children;
+            for (let i = 0; i < stars.length; i++) {
+                if (i < rating) {
+                    stars[i].style.color = '#FFD700'; // Jaune pour les étoiles sélectionnées
+                } else {
+                    stars[i].style.color = '#B0B0B0'; // Gris pour les étoiles non sélectionnées
+                }
+            }
+        }
+
+        // Fonction de suppression des recettes
+        function deleteRecipe(buttonElement) {
+            let recipe = buttonElement.parentElement;
+            recipe.remove(); // Supprime la recette
+        }
+
+        // Fonction de recherche des recettes
+        document.getElementById('search-bar').addEventListener('input', function(event) {
+            let searchQuery = event.target.value.toLowerCase();
+            let recipes = document.querySelectorAll('.recipe');
+            recipes.forEach(function(recipe) {
+                let title = recipe.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(searchQuery)) {
+                    recipe.style.display = 'block';
+                } else {
+                    recipe.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
