@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recettes de Cuisine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        header {
+            background-color: #4A148C;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a, #search-bar, #category-name, #recipe-title, #recipe-description, #recipe-image {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            background-color: #6A1B9A;
+            padding: 5px 10px;
+            border-radius: 30px;
+        }
+
+        #search-bar {
+            border: none;
+            padding: 10px;
+            width: 200px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #6A1B9A;
+        }
+
+        .recipe {
+            background-color: #212121;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .recipe img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .recipe h3 {
+            color: #FFF;
+            margin-top: 10px;
+        }
+
+        .rating {
+            margin-top: 10px;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #B0B0B0;
+            cursor: pointer;
+        }
+
+        .star:hover {
+            color: #FFD700;
+        }
+
+        a {
+            color: #6A1B9A;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-btn {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #C2185B;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .category-container {
+            margin-top: 20px;
+        }
+
+        .category {
+            margin-bottom: 20px;
+        }
+
+        .category-name {
+            color: #FFF;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .category-content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .add-category-btn, .add-recipe-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .add-category-btn:hover, .add-recipe-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Recettes de Cuisine</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showCategoryForm()">Ajouter une catégorie</a></li>
+                <li><a href="#" onclick="showRecipeForm()">Ajouter une recette</a></li>
+                <li><input type="text" id="search-bar" placeholder="Rechercher..."></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="categories">
+        <h2>Catégories</h2>
+        <div class="category-container" id="category-list"></div>
+    </section>
+
+    <!-- Formulaire pour ajouter une catégorie -->
+    <div id="category-form" style="display: none;">
+        <h3>Ajouter une catégorie</h3>
+        <input type="text" id="category-name" placeholder="Nom de la catégorie">
+        <button class="add-category-btn" onclick="addCategory()">Ajouter</button>
+    </div>
+
+    <!-- Formulaire pour ajouter une recette -->
+    <div id="recipe-form" style="display: none;">
+        <h3>Ajouter une recette</h3>
+        <input type="text" id="recipe-title" placeholder="Titre de la recette">
+        <input type="text" id="recipe-description" placeholder="Description de la recette">
+        <input type="text" id="recipe-image" placeholder="URL de l'image">
+        <select id="category-select"></select>
+        <button class="add-recipe-btn" onclick="addRecipe()">Ajouter la recette</button>
+    </div>
+
+    <footer>
+        <p>© 2025 Recettes de Cuisine</p>
+    </footer>
+
+    <script>
+        let categories = [];
+
+        // Ajouter une catégorie
+        function addCategory() {
+            const categoryName = document.getElementById('category-name').value;
+            if (categoryName) {
+                categories.push({ name: categoryName, recipes: [] });
+                displayCategories();
+                document.getElementById('category-form').style.display = 'none';
+            }
+        }
+
+        // Afficher les catégories existantes
+        function displayCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.innerHTML = '';
+            categories.forEach((category, index) => {
+                let categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('category');
+                categoryDiv.innerHTML = `
+                    <div class="category-name">${category.name}</div>
+                    <div class="category-content" id="category-${index}">
+                        ${category.recipes.map(recipe => `
+                            <div class="recipe">
+                                <img src="${recipe.image}" alt="${recipe.title}">
+                                <h3>${recipe.title}</h3>
+                                <p>${recipe.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                categoryList.appendChild(categoryDiv);
+            });
+        }
+
+        // Ajouter une recette
+        function addRecipe() {
+            const title = document.getElementById('recipe-title').value;
+            const description = document.getElementById('recipe-description').value;
+            const image = document.getElementById('recipe-image').value;
+            const categoryIndex = document.getElementById('category-select').value;
+
+            if (title && description && image) {
+                categories[categoryIndex].recipes.push({ title, description, image });
+                displayCategories();
+                document.getElementById('recipe-form').style.display = 'none';
+            }
+        }
+
+        // Afficher le formulaire pour ajouter une catégorie
+        function showCategoryForm() {
+            document.getElementById('category-form').style.display = 'block';
+            document.getElementById('recipe-form').style.display = 'none';
+        }
+
+        // Afficher le formulaire pour ajouter une recette
+        function showRecipeForm() {
+            let categorySelect = document.getElementById('category-select');
+            categorySelect.innerHTML = '';
+            categories.forEach((category, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+            document.getElementById('category-form').style.display = 'none';
+            document.getElementById('recipe-form').style.display = 'block';
+        }
+
+        // Recherche de recettes
+        document.getElementById('search-bar').addEventListener('input', function(event) {
+            let searchQuery = event.target.value.toLowerCase();
+            categories.forEach(category => {
+                const categoryContent = document.getElementById('category-' + categories.indexOf(category));
+                categoryContent.childNodes.forEach(recipeDiv => {
+                    const title = recipeDiv.querySelector('h3').textContent.toLowerCase();
+                    if (title.includes(searchQuery)) {
+                        recipeDiv.style.display = 'block';
+                    } else {
+                        recipeDiv.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>
